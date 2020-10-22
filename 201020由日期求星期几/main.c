@@ -1,9 +1,9 @@
 /*****************************************************************************
- * project name: 求身份证校验码                                               *
+ * project name: 由日期求星期几                                               *
  * filename: main.c                                                          *
  * author: VCode                                                             *
- * create time: 2020/10/15                                                   *
- * last change time: 2020/10/15                                              *
+ * create time: 2020/10/22                                                   *
+ * last change time: 2020/10/22                                              *
  * License: GPL-3.0                                                          *
  *                                                                           * 
  * Notice: This code is open source at                                       *
@@ -19,22 +19,40 @@
 #include<stdio.h>
 
 int main() {
-    int a[18];
-    int w[18] = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1};
-    // char table[] = "10X98765432";
-    int sum = 0;
-    int res;
-    int i;
-    printf("请输入身份证号前17位：");
-    for(i = 0; i < 17; ++i) {
-        scanf("%1d", a + i);
+    int year, month, date;
+    scanf("%d%d%d", &year, &month, &date);
+    if(year < 1600) {
+        puts("Unknown weekday");
+        return 0;
     }
-    for(i = 0; i < 17; ++i) {
-        sum += a[i] * w[i];
+    if(month == 1 || month == 2) {
+        year -= 1;
+        month += 12;
     }
-    sum %= 11;
-    res = (12 - sum + 11) % 11;
-    printf("该身份证的校验码为：%c\n", res == 10 ? 'X' : res + '0');
-    // printf("该身份证的校验码为：%c\n", table[res]);
+    int ans = (date + 26 * (month + 1) / 10 + year + year / 4 + 6 * (year / 100) + year / 400) % 7;
+    switch(ans) {
+        case 0:
+            puts("Saturday");
+            break;
+        case 1:
+            puts("Sunday");
+            break;
+        case 2:
+            puts("Monday");
+            break;
+        case 3:
+            puts("Tuesday");
+            break;
+        case 4:
+            puts("Wednesday");
+            break;
+        case 5:
+            puts("Thursday");
+            break;
+        case 6:
+            puts("Friday");
+            break;
+    }
+    // printf("%d\n", ans);
     return 0;
 }
