@@ -21,6 +21,17 @@
 int main() {
     int year, month, date;
     scanf("%d%d%d", &year, &month, &date);
+    int max_date[12] = {31,29,31,30,31,30,31,31,30,31,30,31};
+    if(month < 1 || month > 12 || date < 1 || date > max_date[month - 1]) {
+        puts("unexcepted input");
+        return 0;
+    }
+    if(month == 2 && date == 29) {
+        if(!((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))) {
+            puts("unexcepted input");
+            return 0;
+        }
+    }
     if(year < 1600) {
         puts("Unknown weekday");
         return 0;
